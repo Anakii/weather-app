@@ -4,11 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IWeather } from 'src/app/core/interfaces/apiResponse';
 import { AppState } from 'src/app/store';
-import { IWeatherState } from 'src/app/store/wather';
 import { LoadWeather } from 'src/app/store/wather/actions';
 import { loaderSelector, weatherSelector } from 'src/app/store/wather/selectors';
-import { environment } from 'src/environments/environment';
-import { threadId } from 'worker_threads';
 const INITIAL_INDEX: number = 0;
 @Component({
   selector: 'home',
