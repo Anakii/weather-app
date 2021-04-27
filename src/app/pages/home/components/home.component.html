@@ -1,3 +1,27 @@
-<p>
-  home works!
-</p>
+<div class="weather-container">
+
+  <form [formGroup]="weatherform" (ngSubmit)="onSearchWeather()">
+
+    <div class="cities-list__wrapper">
+
+      <custom-dropdown formControlName="city" required [options]="citiesList" placeholderLabel="Select City">
+      </custom-dropdown>
+
+    </div>
+    <div class="temp_unit__wrapper">
+      <custom-input formControlName="unit" required unitOnly placeholderLabel="Units(standard, metric, etc)">
+      </custom-input>
+    </div>
+    <div>
+
+      <button type="submit">+</button>
+    </div>
+
+  </form>
+  <div class=loader-wrapper *ngIf="loading$|async">
+    <shared-loader></shared-loader>
+  </div>
+  <div class="weather-item__container" *ngIf="(weathers$|async) as weathers">
+    <weather-item *ngFor="let weather of weathers" [weatherInfo]="weather"></weather-item>
+  </div>
+</div>

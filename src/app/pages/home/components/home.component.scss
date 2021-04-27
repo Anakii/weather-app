@@ -1,0 +1,42 @@
+@import "../../../shared/variables.scss";
+.weather-container {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    // margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .cities-list__wrapper {
+            width: 153px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .temp_unit__wrapper {
+            width: 200px;
+            height: 40px;
+        }
+    }
+    .weather-item__container{
+        height: 60%;
+        width: 90%;
+        margin-top: 10px;
+        background-color: white;
+        overflow: auto;
+    }
+    .loader-wrapper{
+        height: 50px;
+        width: 50px;
+    }
+}
+@media (max-width: $desktop-breakpoint) {
+    form {
+        flex-direction: column;
+    }
+}

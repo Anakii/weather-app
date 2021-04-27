@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  weatherBaseUrl: "http://api.openweathermap.org/"
+  weatherBaseUrl: "http://api.openweathermap.org/",
+  wheatherIconsBaseUrl:'http://openweathermap.org/img/wn'
   //http://openweathermap.org/img/wn/04d.png => icons
 };
 

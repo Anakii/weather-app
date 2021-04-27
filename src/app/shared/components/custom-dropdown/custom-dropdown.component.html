@@ -1,0 +1,24 @@
+<div class="drop-down-container">
+  <div class="drop-down" (click)="onToggle($event)"
+    [ngClass]="{'hide-bottom-border': toggled,'control-error':!control.valid && control.touched}">
+    <span>{{this.selected || placeholderLabel}}</span>
+    <span class="down-arrow" aria-hidden="false" aria-label="Example home icon" [ngClass]="{'rotate': toggled}">
+      ⬇</span>
+  </div>
+  <ng-container *ngIf="toggled">
+    <div class="items-wrapper">
+      <div *ngFor="let option of options" class="option-item" (click)="onSelect(option)">
+        <ng-container [ngTemplateOutlet]="customOption || defaultTemplate"
+          [ngTemplateOutletContext]="{$implicit:option}"></ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+
+</div>
+<ng-template #defaultTemplate let-option>
+  {{option}}
+</ng-template>
+<ng-template #customOptionRef let-option>
+  {{option}} 2
+</ng-template>
