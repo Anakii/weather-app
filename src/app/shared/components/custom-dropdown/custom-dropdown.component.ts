@@ -29,9 +29,6 @@ export class CustomDropdownComponent implements OnInit {
   }
   writeValue(obj: any): void {
     this.selected = obj
-    console.log("!!!", obj);
-
-    // throw new Error('Method not implemented.');
   }
   registerOnChange(fn: any): void {
     this.onChange = fn

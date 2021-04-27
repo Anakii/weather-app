@@ -9,11 +9,11 @@ import { environment } from 'src/environments/environment';
 })
 export class WeatherItemComponent implements OnInit {
   @Input() weatherInfo: IWeather;
-  iconLink: string = ''
+  iconLink: string = '';
   constructor() { }
 
   ngOnInit() {
-    this.iconLink = `${environment.wheatherIconsBaseUrl}/${this.weatherInfo.weather[0].icon}.png`
+    //this.iconLink = //`${environment.wheatherIconsBaseUrl}/${this.weatherInfo.weather[0].icon}.png`
   }
 
 }

@@ -17,9 +17,7 @@ export class CustomInputComponent implements OnInit, ControlValueAccessor {
   value: string = '';
 
   constructor(@Self() @Optional() public control: NgControl) {
-    console.log(this.control);
     this.control.valueAccessor = this
-
   }
   onChange: (value: string) => {}
   onTouch: (value: string) => {}
@@ -27,7 +25,6 @@ export class CustomInputComponent implements OnInit, ControlValueAccessor {
   setValue(value: string) {
     this.value = value;
     this.onChange(value)
-    // console.log(this.control);
 
   }
   writeValue(value: string): void {

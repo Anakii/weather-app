@@ -18,11 +18,8 @@ export class UnitOnlyDirective implements Validator {
   constructor(private hostElement: ElementRef<HTMLUnknownElement>, private renderer: Renderer2) { }
 
   validate(control: AbstractControl): ValidationErrors {
-    // console.log(CustomValidators.unitOnly(control));
     const validationError: ValidationErrors = CustomValidators.unitOnly(control);
-    if (validationError) {
-      console.log(this.hostElement);
-      
+    if (validationError) {      
       this.addClasses(['control-error'])
       return validationError
     }

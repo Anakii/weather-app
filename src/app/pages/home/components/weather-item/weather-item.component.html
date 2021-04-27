@@ -1,6 +1,5 @@
-<p>
-  weather-item works!
-  {{weatherInfo.main.temp}} 
-  {{weatherInfo.weather[0].icon}}
-  <img [src]="iconLink"/>
+<p class="weather-item__container">
+  <ng-content select="[prefix]"></ng-content>
+  <span>{{weatherInfo.name}}<span></span> {{weatherInfo.main.temp}}° </span>
+  <ng-content></ng-content>
 </p>

@@ -7,9 +7,13 @@ export interface CustomAction extends Action {
   type: string;
   payload?: any;
   }
+  export interface LoadWeatherPayload{
+    city:string;
+    unit:string;
+  }
 export class LoadWeather implements CustomAction {
   readonly type:string = LOAD_WEATHER;
-  constructor(public payload: {city:string,unit:string}) {}
+  constructor(public payload: LoadWeatherPayload) {}
 
 }
 export class LoadWeatherSuccess implements CustomAction {

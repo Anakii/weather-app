@@ -1,27 +1,37 @@
 <div class="weather-container">
 
-  <form [formGroup]="weatherform" (ngSubmit)="onSearchWeather()">
+  <form class="main-form-container" [formGroup]="weatherform">
+    <div  formArrayName="weathers" *ngFor="let weatherControl of weathersFormArray.controls;let i = index">
+      <form class="inner-form-container" [formGroupName]="i">
+        <div class="cities-list__wrapper">
+          <custom-dropdown formControlName="city" required [options]="citiesList" placeholderLabel="Select City">
+          </custom-dropdown>
 
-    <div class="cities-list__wrapper">
+        </div>
+        <div class="temp_unit__wrapper">
+          <custom-input formControlName="unit" required unitOnly placeholderLabel="Units(standard, metric, etc)">
+          </custom-input>
+        </div>
+        <div>
 
-      <custom-dropdown formControlName="city" required [options]="citiesList" placeholderLabel="Select City">
-      </custom-dropdown>
-
+          <button [disabled]="currentFormInstanseIdx!==i" (click)="onSearchWeather(i)">+</button>
+        </div>
+        <div class="weather-item__container" *ngIf="(weathers$|async) as weathers">
+          <weather-item *ngIf="weathers[i]" [weatherInfo]="weathers[i]">
+            <img src="http://openweathermap.org/img/wn/{{weathers[i].weather[0].icon}}.png"/>
+          </weather-item>
+        </div>
+      </form>
     </div>
-    <div class="temp_unit__wrapper">
-      <custom-input formControlName="unit" required unitOnly placeholderLabel="Units(standard, metric, etc)">
-      </custom-input>
-    </div>
-    <div>
-
-      <button type="submit">+</button>
-    </div>
-
+    
   </form>
   <div class=loader-wrapper *ngIf="loading$|async">
     <shared-loader></shared-loader>
   </div>
-  <div class="weather-item__container" *ngIf="(weathers$|async) as weathers">
-    <weather-item *ngFor="let weather of weathers" [weatherInfo]="weather"></weather-item>
+  <div *ngIf="(weathers$|async) as weathers">
+    <weather-item *ngFor="let weatherHistory of weathers;let i=index"  [weatherInfo]="weatherHistory">
+      <span prefix>{{i+1}}. </span>
+      <span>;{{weatherHistory.weather[0].main}}</span>
+    </weather-item>
   </div>
 </div>

@@ -7,8 +7,6 @@ export function weatherReducer(state: IWeatherState = INITIAL_WEATHER_STORE, act
       return { ...state, loading: true }
     }
     case LOAD_WEATHER_SUCCESS: {
-      console.log(action.payload);
-
       return {
         ...state,
         loading: false,

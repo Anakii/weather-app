@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IWeather } from 'src/app/core/interfaces/apiResponse';
@@ -7,7 +7,9 @@ import { AppState } from 'src/app/store';
 import { IWeatherState } from 'src/app/store/wather';
 import { LoadWeather } from 'src/app/store/wather/actions';
 import { loaderSelector, weatherSelector } from 'src/app/store/wather/selectors';
-
+import { environment } from 'src/environments/environment';
+import { threadId } from 'worker_threads';
+const INITIAL_INDEX: number = 0;
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
@@ -16,27 +18,63 @@ import { loaderSelector, weatherSelector } from 'src/app/store/wather/selectors'
 export class HomeComponent implements OnInit {
   citiesList: string[] = ['Tel Aviv', 'London'];
   weatherform: FormGroup;
-  weathers$:Observable<IWeather[]>
-  loading$:Observable<boolean>
+  weathers$: Observable<IWeather[]>;
+  loading$: Observable<boolean>;
+  currentFormInstanseIdx: number = INITIAL_INDEX;
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
-    this.weatherform = this.fb.group({ city: ['London'], unit: ['metric'] })
+    this.weatherform = this.fb.group(
+      {
+        weathers: this.fb.array(
+          [
+            this.fb.group({
+              city: [''],
+              unit: ['']
+            })
+          ])
+      }
+    )
   }
   ngOnInit(): void {
-    this.loading$ = this.store.select(loaderSelector)
+    this.loading$ = this.store.select(loaderSelector);
   }
 
-  onSearchWeather(): void {
-    if(this.weatherform.invalid){
-      this.weatherform.markAllAsTouched();
-      return;
+  onSearchWeather(formIdx: number): boolean {
+    const formInstance: AbstractControl = this.getFormByIdx(formIdx);
+    if (formInstance.invalid) {
+      formInstance.markAllAsTouched();
+      return false;
     }
-    this.getWeather()
-    console.log(this.weatherform);
+    if (this.currentFormInstanseIdx !== formIdx)
+      return false;
+
+    this.getWeather(this.city, this.unit);
+    this.addGroup();
+    this.currentFormInstanseIdx++;
+
+    return false;
   }
-  getWeather() {
-    this.store.dispatch(new LoadWeather({city:this.weatherform.get("city").value,unit:this.weatherform.get('unit').value}))
-    this.weathers$ = this.store.select(weatherSelector)//.subscribe(console.log)
+
+  getWeather(city: string, unit: string): void {
+    this.store.dispatch(new LoadWeather({ city, unit }))
+    this.weathers$ = this.store.select(weatherSelector);
+  }
+
+  addGroup(): void {
+    this.weathersFormArray.push(this.fb.group({ city: [''], unit: [''] }));
+  }
+
+  getFormByIdx(idx: number): AbstractControl {
+    return this.weathersFormArray.at(idx)
+  }
+  get city(): string {
+    return this.weathersFormArray.at(this.currentFormInstanseIdx).get("city").value;
+  }
+  get unit(): string {
+    return this.weathersFormArray.at(this.currentFormInstanseIdx).get("unit").value;
+  }
+  get weathersFormArray(): FormArray {
+    return this.weatherform.get("weathers") as FormArray;
   }
 
 }

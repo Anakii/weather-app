@@ -5,8 +5,7 @@
 export const environment = {
   production: false,
   weatherBaseUrl: "http://api.openweathermap.org/",
-  wheatherIconsBaseUrl:'http://openweathermap.org/img/wn'
-  //http://openweathermap.org/img/wn/04d.png => icons
+  apiKey:'0d7303c17ee3d3482cd82a2ad273a90d'
 };
 
 /*
