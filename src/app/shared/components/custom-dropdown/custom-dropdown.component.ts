@@ -1,16 +1,16 @@
-import { Component, HostListener, Input, OnInit, TemplateRef } from '@angular/core';
-import { NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, HostListener, Input, OnInit, Optional, Self, TemplateRef } from '@angular/core';
+import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'custom-dropdown',
   templateUrl: './custom-dropdown.component.html',
   styleUrls: ['./custom-dropdown.component.scss'],
 })
-export class CustomDropdownComponent implements OnInit {
+export class CustomDropdownComponent implements OnInit,ControlValueAccessor {
   @Input() options: any[] = [];
   @Input() placeholderLabel: string;
   @Input() customOption: TemplateRef<any>;
-  constructor(public control:NgControl) { 
+  constructor(@Self() @Optional() public control: NgControl) {
     this.control.valueAccessor = this
   }
 
