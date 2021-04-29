@@ -13,7 +13,7 @@ export class WeatherService {
     this.baseUrl = environment.weatherBaseUrl
   }
 
-  getWeatherByCityName(city: any, unit: any): Observable<IApiResponse<IWeather>> {
+  getWeatherByCityName(city: string, unit: string): Observable<IApiResponse<IWeather>> {
     return this.restfull.get<IApiResponse<IWeather>>(`${this.baseUrl}/data/2.5/weather?q=${city}&units=${unit}&appid=${environment.apiKey}`)
   }
 }
